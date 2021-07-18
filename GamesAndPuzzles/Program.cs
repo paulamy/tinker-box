@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GamesAndPuzzles.Classes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,9 @@ namespace GamesAndPuzzles
     {
         static void Main(string[] args)
         {
-            ConsoleFunctions cf = new ConsoleFunctions();
+            UserMenu um = new UserMenu();
+            um.StartUp();
+
 
         }
     }
