@@ -9,9 +9,14 @@ namespace ProjectEuler
     {
         public int MaxValue { get; set; }
 
-        public MultiplesOf3And5(int maxValue)
+        public MultiplesOf3And5()
         {
-            MaxValue = maxValue;
+            Console.WriteLine("If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9.");
+            Console.WriteLine("The sum of these multiples is 23.");
+            Console.WriteLine("Find the sum of all the multiples of 3 or 5 below a specified input."); 
+            Console.Write("\nSpecify the input: ");
+            MaxValue = int.Parse(Console.ReadLine());
+            Console.WriteLine($"The sum is: {Sum()}");
         }
         public int Sum()
         {

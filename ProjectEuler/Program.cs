@@ -8,11 +8,8 @@ namespace ProjectEuler
     {
         static void Main(string[] args)
         {
-            SumSquareDifference ssd = new SumSquareDifference();
-            ssd.Compute();
-            Console.WriteLine();
-            Console.WriteLine("More Efficient Method");
-            ssd.ComputeEfficient();
+            UserInterface ui = new UserInterface();
+            ui.StartUp();
         }
     
     }
