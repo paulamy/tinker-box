@@ -97,23 +97,6 @@ function startScreen()
 }
 
 /**
- * Reset to the original screen
- */
-function reset(){
-    location.reload();
-}
-
-/**
- * Show the summary screen after the practice session
- */
-function showSummary(){
-    showHide.forEach(element => {
-            element.classList.add("hidden");
-    })
-    
-}
-
-/**
  * Update the page to display a problem from the set
  * @param {Session} practice the session object that holds the problem set and tracks completed problems and score
  * @param {number} problemNumber the index of the current problem
@@ -137,6 +120,8 @@ function getNextProblem(practice, problemNumber){
     }
 }
 
+//Utility functions for UX
+
 /**
  * Update the stat display
  * @param {Session} practice the session object that holds the problem set and tracks completed problems and score
@@ -152,33 +137,35 @@ function updateDisplay(practice) {
     }
 }
 
+/**
+ * Reset to the original screen
+ */
+function reset(){
+    location.reload();
+}
+
+/**
+ * Show the summary screen after the practice session
+ */
+function showSummary(){
+    showHide.forEach(element => {
+            element.classList.add("hidden");
+    })
+    
+}
+
+
 // Utility functions for creating the random problem set
-
-/**
- * Generate a random integer up to the specified maximum value
- * @param {number} max Exclusive upper boundary for random integer
- */
-function getRandomNumber(max) {
-    return Math.trunc(Math.random() * Math.trunc(max))
-}
-
-/**
- * Shuffle an input array
- * @param {[]} arr input array
- */
-function shuffleArray(arr) {
-    return arr.sort(function (a,b) { return Math.random() - 0.5})
-}
-
 /**
  * Track the selected operations for the practice session
  */
 function problemSetOperators() {
-    let operatorChoices = [];
-    operatorChoices.push(document.querySelector("#add"));
-    operatorChoices.push(document.querySelector("#subtract"));
-    operatorChoices.push(document.querySelector("#multiply"));
-    operatorChoices.push(document.querySelector("#divide"));
+    operators.length = 0;
+    let operatorChoices = [
+        document.querySelector("#add"), 
+        document.querySelector("#subtract"), 
+        document.querySelector("#multiply"), 
+        document.querySelector("#divide")];
     operatorChoices.forEach(element => {
         if(element.checked && !operators.includes(element.id))
         {
@@ -188,21 +175,40 @@ function problemSetOperators() {
     for (let i = 0; i < operators.length; i++)
     {
         switch(operators[i]) {
-            case 'add' : 
+            case 'add' || "+" : 
                 operators[i] = "+";
             break;
-            case 'subtract' : 
+            case 'subtract' || "-" : 
                 operators[i] = "-";
             break;
-            case 'multiply' : 
+            case 'multiply' || "*" : 
                 operators[i] = "*";
             break;
-            case 'divide' : 
+            case 'divide' || "/" : 
                 operators[i] = "/";
             break;
+
         }
     }
+    
         return operators;
+}
+
+/**
+ * Generates a random problem set of the specified size using the specified operations
+ * @param {number} size How many problems to generate
+ * @param {string} operators Which operations to use; takes an input string of "*", "/", "+", or "-" 
+ */
+function generateProblemSet(size, operators) {
+    let problemSet = [];
+    for (let i = 0; i < size; i++)
+    {
+        randOperator = operators[getRandomNumber(operators.length)];
+        randProblem = generateRandomProblem(randOperator);
+        randProblem.number = i;
+        problemSet.push(randProblem);
+    }
+    return problemSet;
 }
 
 /**
@@ -268,18 +274,18 @@ function generateRandomProblem(operator) {
 }
 
 /**
- * Generates a random problem set of the specified size using the specified operations
- * @param {number} size How many problems to generate
- * @param {string} operators Which operations to use; takes an input string of "*", "/", "+", or "-" 
+ * Generate a random integer up to the specified maximum value
+ * @param {number} max Exclusive upper boundary for random integer
  */
-function generateProblemSet(size, operators) {
-    let problemSet = [];
-    for (let i = 0; i < size; i++)
-    {
-        randOperator = operators[getRandomNumber(operators.length)];
-        randProblem = generateRandomProblem(randOperator);
-        randProblem.number = i;
-        problemSet.push(randProblem);
-    }
-    return problemSet;
+function getRandomNumber(max) {
+    return Math.trunc(Math.random() * Math.trunc(max))
 }
+
+/**
+ * Shuffle an input array
+ * @param {[]} arr input array
+ */
+function shuffleArray(arr) {
+    return arr.sort(function (a,b) { return Math.random() - 0.5})
+}
+
